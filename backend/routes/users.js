@@ -2,10 +2,12 @@ const express = require("express");
 const {
   getUsers,
   getUser,
+  getNgoDetail,
   createUser,
   updateUser,
   deleteUser
 } = require("../controllers/users");
+const getDetails=require("../controllers/Ngo")
 
 const User = require("../models/User");
 
@@ -27,5 +29,10 @@ router
   .get(getUser)
   .put(updateUser)
   .delete(deleteUser);
+
+  router
+  .route("/details")
+  .get(advancedResults(User),getNgoDetail);
+
 
 module.exports = router;

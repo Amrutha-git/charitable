@@ -250,6 +250,9 @@ export default class Navbar extends Component {
                    User Login
                   </a>
                   <a className="dropdown-item" href="/Login/vendor">
+                    Ngo Login
+                  </a>
+                  <a className="dropdown-item" href="/Login/vendor">
                     Admin Login
                   </a>
                 </div>

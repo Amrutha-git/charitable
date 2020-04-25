@@ -20,6 +20,17 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     data: user
   });
 });
+// @desc      Get Ngo
+// @route     GET /api/v1/auth/users/details
+// @access    Private/Admin
+exports.getNgoDetail = asyncHandler(async (req, res, next) => {
+  const user = await User.find({role:"ngo"});
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
 
 // @desc      Create user
 // @route     POST /api/v1/auth/users

@@ -48,7 +48,7 @@ class Login extends Component {
       if (username == "") {
         social = "#12055c";
         login = (
-          <a href={`/`} style={{ textDecoration: "none" }}>
+          <a href={`/user/home`} style={{ textDecoration: "none" }}>
             Login
           </a>
         );
