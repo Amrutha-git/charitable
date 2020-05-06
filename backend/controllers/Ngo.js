@@ -3,6 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 // const geocoder = require("../utils/geocoder");
 const Ngo = require("../models/Ngo");
+const User=require("../models/User");
 
 // @desc      Get all ngos
 // @route     GET /api/v1/ngos
@@ -28,6 +29,14 @@ exports.getNgo = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: ngo });
 });
+exports.getNgoDetail = asyncHandler(async (req, res, next) => {
+  const user = await User.find({role:"ngo"});
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
 
 // @desc      Create new ngo
 // @route     POST /api/v1/ngos
@@ -37,17 +46,17 @@ exports.createNgo = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
 
   // Check for published ngo
-  const publishedngo = await Ngo.findOne({ user: req.user.id });
+  // const publishedngo = await Ngo.findOne({ user: req.user.id });
 
-  // If the user is not an admin, they can only add one ngo
-  if (publishedngo && req.user.role !== "admin") {
-    return next(
-      new ErrorResponse(
-        `The user with ID ${req.user.id} has already  a ngo`,
-        400
-      )
-    );
-  }
+  // // If the user is not an admin, they can only add one ngo
+  // if (publishedngo && req.user.role !== "admin") {
+  //   return next(
+  //     new ErrorResponse(
+  //       `The user with ID ${req.user.id} has already  a ngo`,
+  //       400
+  //     )
+  //   );
+  // }
 
   const ngo = await Ngo.create(req.body);
 
@@ -124,26 +133,26 @@ exports.deleteNgo = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/ngo/:ngoId/photo
 // @access    Private
 exports.ngosPhotoUpload = asyncHandler(async (req, res, next) => {
-  const ngo = await Ngo.findById(req.params.ngoId);
+  // const ngo = await Ngo.findById(req.params.ngoId);
 
-  if (!ngo) {
-    return next(
-      new ErrorResponse(
-        `Ngo not found with id of ${req.params.ngoId}`,
-        404
-      )
-    );
-  }
+  // if (!ngo) {
+  //   return next(
+  //     new ErrorResponse(
+  //       `Ngo not found with id of ${req.params.ngoId}`,
+  //       404
+  //     )
+  //   );
+  // }
 
-  // Make sure user is ngo owner
-  if (ngo.user.toString() !== req.user.id && req.user.role !== "admin") {
-    return next(
-      new ErrorResponse(
-        `User ${req.params.ngoId} is not authorized to update this bootcamp`,
-        401
-      )
-    );
-  }
+  // // Make sure user is ngo owner
+  // if (ngo.user.toString() !== req.user.id && req.user.role !== "admin") {
+  //   return next(
+  //     new ErrorResponse(
+  //       `User ${req.params.ngoId} is not authorized to update this bootcamp`,
+  //       401
+  //     )
+  //   );
+  // }
 
   if (!req.files) {
     return next(new ErrorResponse(`Please upload a file`, 400));
@@ -166,20 +175,20 @@ exports.ngosPhotoUpload = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Create custom filename
-  file.name = `photo_${ngo._id}${path.parse(file.name).ext}`;
+  file.mv(
+    `${__dirname}/../../frontend/public/uploads/${file.name}`,
+    async (err) => {
+      if (err) {
+        console.error(err);
+        return next(new ErrorResponse(`Problem with file upload`, 500));
+      }
 
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
-    if (err) {
-      console.error(err);
-      return next(new ErrorResponse(`Problem with file upload`, 500));
+      const files = `/uploads/${file.name}`;
+
+      res.status(200).json({
+        success: true,
+        data: files,
+      });
     }
-
-    await Ngo.findByIdAndUpdate(req.params.ngoId, { photo: file.name });
-
-    res.status(200).json({
-      success: true,
-      data: file.name,
-    });
-  });
+  );
 });

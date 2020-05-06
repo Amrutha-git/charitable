@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getNgos,
   getNgo,
+  getNgoDetail,
   createNgo,
   updateNgo,
   deleteNgo,
@@ -27,13 +28,18 @@ router.use("/:ngoId/reviews", reviewRouter);
 // router.route("/radius/:zipcode/:distance").get(getNgosInRadius);
 
 router
-  .route("/:ngoId/photo")
-  .put(protect, authorize("ngo", "admin"), ngosPhotoUpload);
+  .route("/photo")
+  .post(protect, authorize("ngo", "admin"), ngosPhotoUpload);
 
 router
   .route("/")
   .get(advancedResults(Ngo, "Orphans"), getNgos)
   .post(protect, authorize("ngo", "admin"), createNgo);
+
+  router
+  .route("/ngo")
+  .get(getNgoDetail);
+
 
 router
   .route("/:ngoId")

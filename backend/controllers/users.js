@@ -32,6 +32,15 @@ exports.getNgoDetail = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.getNgos = asyncHandler(async (req, res, next) => {
+  const user = await User.find({ role: "donar" });
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
 // @desc      Create user
 // @route     POST /api/v1/auth/users
 // @access    Private/Admin

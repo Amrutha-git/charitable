@@ -1,11 +1,57 @@
 import React, { Component } from "react";
 import logo from "../../assets/logo.png";
 // import AdminHome from "./AdminHome";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
 
 export default class Navbar extends Component {
-  state = {
-    loggedIn: true,
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: "",
+      isAuth:true,
+    };
+  }
+  componentDidMount = async () => {
+    // getting user
+    const token = sessionStorage.getItem("token");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.get(`http://localhost:5000/api/v1/auth/me`, config);
+    this.setState({
+      user: res.data.data,
+    });
+    console.log(this.state.user.name);
   };
+  onLogout = async (e) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      await axios.get("http://localhost:5000/api/v1/auth/logout", config);
+      sessionStorage.removeItem("token", "isAuth");
+      alert("Logged Out");
+      this.setState({
+        isAuth: false,
+      });
+    } catch (err) {
+      console.log("Can't load the items");
+    }
+    sessionStorage.clear();
+  };
+
+
   render() {
     // let cart;
     let profile, logout;
@@ -74,26 +120,26 @@ export default class Navbar extends Component {
           </li>
         </ul>
       );
-      // logout = (
-      //   <a
-      //     type="b                                                       utton"
-      //     className="btn  navbar-toggle-box-collapse d-none d-md-block "
-      //     href="/Login/farmer"
-      //     title="Logout"
-      //   >
-      //     <span
-      //       className="fa fa-sign-out fa-2x"
-      //       style={{ color: "#f2f2f3  " }}
-      //       aria-hidden="true"
-      //     ></span>
-      //   </a>
-      // );
+      logout = (
+        <a
+          type="b                                                       utton"
+          className="btn  navbar-toggle-box-collapse d-none d-md-block "
+          href="/Admin/ngo"
+          title="Logout"
+        >
+          <span
+            className="fa fa-sign-out fa-2x"
+            style={{ color: "#f2f2f3  " }}
+            aria-hidden="true"
+          ></span>
+        </a>
+      );
     } else {
       profile = (
         <a
           type="button"
           className="btn  navbar-toggle-box-collapse d-none d-md-block "
-          href="vendor/Login/vendor"
+          href="/Admin/ngo"
           title="Profile"
         >
           <span
@@ -122,7 +168,7 @@ export default class Navbar extends Component {
             <span></span>
             <span></span>
           </button>
-          <a className="logo top1" href="/vendor/Home">
+          <a className="logo top1" href="/Admin/AdminHome">
             <img src={logo} alt="" className=""></img>
             {/* Farm
             <span className="color-b">Easy</span> */}
@@ -142,7 +188,7 @@ export default class Navbar extends Component {
           >
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link " href="/vendor/Home">
+                <a className="nav-link " href="/user/AdminHome">
                   Home
                 </a>
               </li>
@@ -157,14 +203,14 @@ export default class Navbar extends Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Donate
+                  Details
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="/vendor/addDonors">
-                    Add Donaters
+                  <a className="dropdown-item" href="/admin/addDonors">
+                    Add Details
                   </a>
-                  <a className="dropdown-item" href="/vendor/ShowDonors">
-                    Show Donaters
+                  <a className="dropdown-item" href="/admin/ShowDonors">
+                    Show Details
                   </a>
                 </div>
               </li>
@@ -198,3 +244,4 @@ export default class Navbar extends Component {
     );
   }
 }
+

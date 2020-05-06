@@ -2,34 +2,34 @@ const path = require("path");
 const ErrorResponse = require("../utils/errorResponse");
 
 const Category = require("../models/Category");
-// const Orphans= require("../models/Orphans");
+ const Ngo= require("../models/Ngo");
 
 const asyncHandler = require("../middleware/async");
 // @desc      Get products
 // @route     GET /api/v1/category/:categoryId/products/
 // @access    Public
-exports.getCategoryOrphans = asyncHandler(async (req, res, next) => {
-  const orphans = await Orphans.find({
+exports.getCategoryNgo = asyncHandler(async (req, res, next) => {
+  const ngo = await Ngo.find({
     category: req.params.categoryId,
   })
     .populate({
       path: "ngo",
-      select: "name description",
+     
     })
     .populate({
       path: "category",
     });
 
-  if (!orphans) {
+  if (!ngo) {
     return next(
-      new ErrorResponse(`No product with the id of ${req.params.id}`),
+      new ErrorResponse(`No ngo with the id of ${req.params.id}`),
       404
     );
   }
   res.status(200).json({
     success: true,
-    count: product.length,
-    data: product,
+    count: ngo.length,
+    data: ngo,
   });
 });
 

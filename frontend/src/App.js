@@ -8,10 +8,13 @@ import Footer from "./componets/publics/Footer";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Functions from "./componets/Admin/Functions";
-import AdminNavbar from "./componets/Admin/AdminNavbar";
+import UFunctions from "./componets/Donors/UFunctions";
+import MFunctions from "./componets/MainAdmin/MFunctions";
+// import AdminNavbar from "./componets/Admin/AdminNavbar";
 
 import All from "./componets/publics/All";
 // import Alert from "./componets/publics/Alert";
+import PrivateRoute from "./componets/utils/PrivateRoute"
 
 import UserHome from "./componets/UserAdmin/UserHome";
 
@@ -46,11 +49,13 @@ class App extends React.Component {
           <Switch>
             <Route exact path={"/Login/:type"} component={Login} />
           </Switch>
-          <AdminNavbar />
+          {/* <AdminNavbar /> */}
           <Switch>
-            <Route path={"/vendor/"} component={Functions} />
+            <PrivateRoute role="ngo" path={"/admin/"} component={Functions} />
+            <PrivateRoute role="donor" path={"/donor/"} component={UFunctions} />
+            <PrivateRoute role="main" path={"/main/"} component={MFunctions} />
 
-            <Route exact path={"/admin"} component={UserHome} />
+            {/* <Route exact path={"/admin"} component={UserHome} /> */}
 
             <All></All>
           </Switch>

@@ -7,7 +7,7 @@ const {
   getCategories,
   addCategory,
   deleteCategory,
-  getCategoryOrphans,
+  getCategoryNgo,
   updateCategory,
 } = require("../controllers/category");
 const { protect, authorize } = require("../middleware/auth");
@@ -19,7 +19,7 @@ router
   .route("/")
   .get(
     advancedResults(Category, {
-      path: "orphans",
+      path: "ngo",
       select: "name",
     }),
     getCategories
@@ -28,10 +28,10 @@ router
 
 router
   .route("/:categoryId")
-  .get(getCategoryOrphans)
+  .get(getCategoryNgo)
   .put(protect, authorize("admin"), updateCategory)
   .delete(protect, authorize("admin"), deleteCategory);
 
-router.route("/:categoryId/orphans").get(getCategoryOrphans);
+router.route("/:categoryId/ngo").get(getCategoryNgo);
 
 module.exports = router;

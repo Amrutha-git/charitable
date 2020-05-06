@@ -1,12 +1,61 @@
 import React, { Component } from "react";
 // import logo from "../assets/logo.jpg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Registration extends Component {
-  state = {
-    // name={},
-  };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      role: "user",
+    };
+    this.onChange = this.onChange.bind(this);
+  }
+  // Input on change
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+  // register
+  onSubmit = async (e) => {
+    e.preventDefault();
+
+    const reg = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      role: this.state.role,
+    };
+
+    const body = JSON.stringify(reg);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    // console.log(body);
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/v1/auth/register`,
+        body,
+        config
+      );
+      console.log(res.data.token);
+      sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("isAuth", true);
+      // console.log(sessionStorage);
+      this.setState({
+        isAuth: true,
+      });
+    } catch (error) {
+      alert("Error Login!!");
+    }
+  };
   render() {
     return (
       <div className="container mt-5 mtop ">
