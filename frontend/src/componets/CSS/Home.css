@@ -65,6 +65,7 @@ h6 {
   font-weight: 700;
   letter-spacing: 0.1em;
 }
+
 /*------/ Display Table & Table Cell /------*/
 
 .display-table {
@@ -260,7 +261,7 @@ h6 {
 //--//-->   NAVBAR
 ======================================*/
 
-.navbar-default {
+ .navbar-default {
   transition: all 0.5s ease-in-out;
   background-color: #ffffff;
   padding-top: 28px;
@@ -304,8 +305,8 @@ h6 {
   transition: all 0.1s ease-in-out;
   position: relative;
   padding-left: 0;
-  padding-right: 5cm;
-width: 150px;
+  padding-right: 0;
+width: 140px;
 }
 nav {
   background: linear-gradient(157deg, #ffffff, #aeec03);
@@ -839,7 +840,7 @@ footer .credits {
 
 .service_block p {
   font-size: 16px;
-  color: #888888;
+  color: brown;
   margin: 0px;
 }
 #service {
@@ -1057,7 +1058,7 @@ footer .credits {
 
 .contact_section h2 {
   font-size: 40px;
-  color: #ffffff;
+  color: brown;
   margin: 0 0 50px 0;
   text-transform: uppercase;
 }
@@ -1136,7 +1137,7 @@ footer .credits {
   line-height: 28px;
   display: block;
   font-size: 16px;
-  color: #ffffff;
+  color: brown;
   margin: 0 0 40px;
 }
 .social-link {

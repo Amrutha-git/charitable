@@ -185,6 +185,11 @@ export default class Navbar extends Component {
                   Donors List
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link " href="/main/showreview">
+                 Review List
+                </a>
+              </li>
             </ul>
           </div>
 

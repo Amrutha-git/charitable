@@ -10,7 +10,7 @@ import ShowDonors from "./ShowDonors";
 import AddNgo from "./addNgo";
 import Category from "./Category";
 import addUser from "./AddUser";
-
+import showreview from "./showreview"
 export default class Functions extends React.Component {
   state = {
     // users: [],
@@ -111,6 +111,7 @@ export default class Functions extends React.Component {
           <Route path={"/main/category"} component={Category} />
           {/* <Route path={"/main/addNgo"} component={addNgo} /> */}
           <Route path={"/main/addUser"} component={addUser} />
+          <Route path={"/main/showreview"} component={showreview} />
         </Switch>
       </div>
     </Router>

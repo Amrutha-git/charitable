@@ -120,20 +120,20 @@ export default class Navbar extends Component {
           </li>
         </ul>
       );
-      logout = (
-        <a
-          type="button"
-          className="btn  navbar-toggle-box-collapse d-none d-md-block "
-          href="/Admin/ngo"
-          title="Logout"
-        >
-          <span
-            className="fa fa-sign-out fa-2x"
-            style={{ color: "#f2f2f3  " }}
-            aria-hidden="true"
-          ></span>
-        </a>
-      );
+      // logout = (
+      //   <a
+      //     type="button"
+      //     className="btn  navbar-toggle-box-collapse d-none d-md-block "
+      //     href="/Admin/ngo"
+      //     title="Logout"
+      //   >
+      //     <span
+      //       className="fa fa-sign-out fa-2x"
+      //       style={{ color: "#f2f2f3  " }}
+      //       aria-hidden="true"
+      //     ></span>
+      //   </a>
+      // );
     } else {
       profile = (
         <a

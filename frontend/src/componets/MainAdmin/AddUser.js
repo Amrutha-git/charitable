@@ -66,7 +66,7 @@ class addUser extends Component {
                   <div className="wrapper wrapper--w900">
                     <div className="card cardH card-6 bg-dark">
                       <div className="card-heading">
-                        <h2 className="title text-primary ">Add Patient</h2>
+                        <h2 className="title text-primary ">Add Donors</h2>
                       </div>
                       <div className="card-body  text-light">
                         <form onSubmit={this.onSubmit}>
